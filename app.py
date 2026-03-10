@@ -4,22 +4,24 @@ import pandas as pd
 import streamlit as st
 import matplotlib
 import matplotlib.pyplot as plt
+from matplotlib import font_manager
 
-# =========================
-# Matplotlib 中文字体修复
-# =========================
+# 优先使用云端可安装的 Noto CJK 字体
+matplotlib.rcParams["font.family"] = "sans-serif"
 matplotlib.rcParams["font.sans-serif"] = [
+    "Noto Sans CJK SC",
+    "Noto Sans CJK JP",
     "Microsoft YaHei",
     "SimHei",
     "SimSun",
-    "KaiTi",
-    "FangSong",
-    "Noto Sans CJK SC",
-    "Arial Unicode MS",
-    "DejaVu Sans"
+    "DejaVu Sans",
 ]
 matplotlib.rcParams["axes.unicode_minus"] = False
-matplotlib.rcParams["font.family"] = "sans-serif"
+
+# 可选：打印找到的字体，便于云端日志排查
+available_fonts = {f.name for f in font_manager.fontManager.ttflist}
+print("Available CJK fonts:",
+      [f for f in ["Noto Sans CJK SC", "Noto Sans CJK JP", "Microsoft YaHei", "SimHei"] if f in available_fonts])
 
 st.set_page_config(
     page_title="基于 Python 的平抛运动虚拟实验与学习反馈系统",
